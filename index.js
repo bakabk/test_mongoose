@@ -13,15 +13,21 @@ db.on('Error', err => {
 })
 
 db.once('open', () => {
+  //begin
   console.log('We are connected!')
 
-User.findById('5a5f1e373928560bf34a6798', (err, user) => {
-    console.log('result: ', err, user)
+//создание и сохранение записи
+  // const user = new User({name: 'Bill', country: 'US'})
+  // user.save( (err, createUser) => {
+  //   console.log('data saved: ', err, createUser)
+  // } )
+
+  User.findUserByName('alex', (err, user) => {
+    // console.log(err, user)
+    user.findSimilarUsersByCountry( (err, users) => {
+      console.log(err, users)
+    })
   })
 
-  // const user = new User({name: 'Alex'})
-  // console.log(user)
-  // user.save( (err, createUser) => {
-  //   console.log('result: ', err, createUser)
-  // } )
+  //end
 })
