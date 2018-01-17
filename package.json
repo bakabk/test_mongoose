@@ -1,15 +1,17 @@
 {
-  "name": "nodejs express mongoose",
+  "name": "_test_express_and_mongoose",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.5.1",
+    "mongoose": "^4.13.9",
     "nodemon": "^1.14.11"
   }
 }
