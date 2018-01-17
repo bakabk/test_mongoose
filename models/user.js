@@ -6,7 +6,7 @@ const userSchema = mongoose.Schema({
 })
 
 userSchema.statics.findUserByName = function (name, cb){
-  return this.findOne({name: new RegExp('alex', 'i')}, cb)
+  return this.findOne({name: new RegExp(name, 'i')}, cb)
 }
 
 userSchema.methods.findSimilarUsersByCountry = function (cb){

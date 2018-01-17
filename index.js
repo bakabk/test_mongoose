@@ -1,33 +1,39 @@
+const express = require('express')
 const mongoose = require('mongoose')
 const User = require('./models/user')
-mongoose.Promise = require('bluebird')
 
-mongoose.connect('mongodb://localhost/testmongoose', {
-  useMongoClient: true
-})
+const app = express()
 
-const db = mongoose.connection
-
-db.on('Error', err => {
-  console.log('err connection ', err)
-})
-
-db.once('open', () => {
-  //begin
-  console.log('We are connected!')
-
-//создание и сохранение записи
-  // const user = new User({name: 'Bill', country: 'US'})
-  // user.save( (err, createUser) => {
-  //   console.log('data saved: ', err, createUser)
-  // } )
-
-  User.findUserByName('alex', (err, user) => {
-    // console.log(err, user)
-    user.findSimilarUsersByCountry( (err, users) => {
-      console.log(err, users)
+app.get('/user', (req, res) => {
+    User.findUserByName('test', (err, user) => {
+      res.json(user)
     })
-  })
-
-  //end
 })
+
+app.get('/save/:name', (req, res) => {
+    const user = new User({name: 'test', country: 'US'})
+    user.save( (err, createUser) => {
+      console.log('data saved: ', err, createUser)
+    } )
+})
+
+const port = 3999
+const startServer = () => {
+  app.listen(port)
+  console.log(`App started on port ${port}`)
+}
+const connectDb = () => {
+  mongoose.Promise = require('bluebird')
+
+  const options = {
+    useMongoClient: true
+  }
+
+  mongoose.connect('mongodb://localhost/testmongoose', options)
+  return mongoose.connection
+}
+
+connectDb()
+  .on('error', console.log)
+  .on('disconnected', console.log)
+  .once('open', startServer)
